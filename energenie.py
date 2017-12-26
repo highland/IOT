@@ -16,7 +16,7 @@ ask = 18
 modulate = 22
 ready = False
 
-def _set_GPIO:
+def _set_GPIO():
     if not ready:
         GPIO.setmode(GPIO.BOARD)
         for pin in D3, D2, D1, D0, On_off_key, modulate:
