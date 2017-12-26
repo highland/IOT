@@ -67,9 +67,15 @@ def program_socket(number):
 
 
 def on(socket):
-    _transmit(_encode(socket) | turn_on)
+    if socket == 'all':
+        _transmit(all_sockets | turn_on)
+    else:
+        _transmit(_encode(socket) | turn_on)
 
 
 def off(socket):
-    _transmit(_encode(socket))
+    if socket == 'all':
+        _transmit(all_sockets)
+    else:
+        _transmit(_encode(socket))
 
