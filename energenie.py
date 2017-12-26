@@ -20,7 +20,7 @@ def _set_GPIO():
     global ready
     if not ready:
         GPIO.setmode(GPIO.BOARD)
-        for pin in D3, D2, D1, D0, On_off_key, modulate:
+        for pin in D3, D2, D1, D0, ask, modulate:
             GPIO.setup(pin, GPIO.OUT)
         GPIO.output(modulate, False)   # disable modulator
         GPIO.output(ask, False)        # basic ASK
