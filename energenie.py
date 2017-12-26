@@ -61,7 +61,7 @@ def program_socket(number):
     _transmit(_encode(number))
 
 def on(socket):
-    _transmit(_encode(socket) & turn_on)
+    _transmit(_encode(socket) | turn_on)
 
 def off(socket):
     _transmit(_encode(socket))
