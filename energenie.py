@@ -1,10 +1,11 @@
 import RPi.GPIO as GPIO
+import time
 
-all = 0b0011
+all_sockets = 0b0011
 socket1 = 0b0111
 socket2 = 0b0110
 socket3 = 0b0101
-socket3 = 0b0100
+socket4 = 0b0100
 turn_on = 0b1000
 
 D3 = 13
@@ -16,10 +17,12 @@ ask = 18
 modulate = 22
 ready = False
 
-def _set_GPIO:
+
+def _set_gpio():
+    global ready
     if not ready:
         GPIO.setmode(GPIO.BOARD)
-        for pin in D3, D2, D1, D0, On_off_key, modulate:
+        for pin in D3, D2, D1, D0, ask, modulate:
             GPIO.setup(pin, GPIO.OUT)
         GPIO.output(modulate, False)   # disable modulator
         GPIO.output(ask, False)        # basic ASK
@@ -27,9 +30,10 @@ def _set_GPIO:
             GPIO.output(pin, False)    # Start at all zeros
         ready = True
 
+
 def _transmit(code):
     if not ready:
-        _set_GPIO()
+        _set_gpio()
     GPIO.output(D3, bool(code & 0B1000))
     GPIO.output(D2, bool(code & 0B0100))
     GPIO.output(D1, bool(code & 0B0010))
@@ -38,6 +42,7 @@ def _transmit(code):
     GPIO.output(modulate, True)
     time.sleep(0.25)
     GPIO.output(modulate, False)
+
 
 def _encode(number):
     if number == 1:
@@ -53,13 +58,16 @@ def _encode(number):
         return 0
     return code
 
+
 def program_socket(number):
     print('Setting up socket', number)
     input('Press green button on chosen socket for 5+ seconds')
     _transmit(_encode(number))
 
+
 def on(socket):
-    _transmit(_encode(socket) & turn_on)
+    _transmit(_encode(socket) | turn_on)
+
 
 def off(socket):
     _transmit(_encode(socket))
