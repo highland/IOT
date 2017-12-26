@@ -63,7 +63,8 @@ def _encode(number):
 def program_socket(number):
     print('Setting up socket', number)
     input('Press green button on chosen socket for 5+ seconds')
-    _transmit(_encode(number))
+    on(number)
+    off(number)
 
 
 def on(socket):
