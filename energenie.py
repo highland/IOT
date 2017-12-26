@@ -1,4 +1,5 @@
 import RPi.GPIO as GPIO
+import time
 
 all = 0b0011
 socket1 = 0b0111
