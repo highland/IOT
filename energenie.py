@@ -21,6 +21,7 @@ ready = False
 def _set_gpio():
     global ready
     if not ready:
+        GPIO.setwarnings(False)
         GPIO.setmode(GPIO.BOARD)
         for pin in D3, D2, D1, D0, ask, modulate:
             GPIO.setup(pin, GPIO.OUT)
